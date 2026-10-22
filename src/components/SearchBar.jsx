@@ -16,9 +16,9 @@ function SearchBar() {
                    <button className="absolute right-14 top-1/2 transform -translate-y-1/2 text-white/50 hover:text-white transition-all p-1 rounded-full hover:bg-white/10">
                     <X className="w-4 h-4"/>
                    </button>
-                   {/* <button className="absolute right-14 top-1/2 transform -translate-y-1/2  text-white/50 hover:text-white transition-all p-1 rounded-full hover:bg-white/10">
+                   <button className="absolute right-4 top-1/2 transform -translate-y-1/2  text-white/50 hover:text-white transition-all p-1 rounded-full hover:bg-white/10">
                     <MapPin className="w-5 h-5"/>
-                   </button> */}
+                   </button>
                 </div>
             </form>
 
@@ -34,7 +34,12 @@ function SearchBar() {
                 {/* Else  */}
                 <button className="w-full px-6 py-6 text-left hover:bg-white/10 transition-all  duration-300   flex
                      items-center justify-between group border-b border-white/20 last:border-b-0">
-
+                   <div className="font-medium text-white group:hover-white/90">
+                     City Name
+                     <span>,City State</span>
+                   </div>
+                   <div className="tetx-sm text-white/60">County</div>
+                   <Search className="w-4 h-4 text-white/40 group-hover:text-white/60 transition-al"/>
                 </button>
             </div>
         </div>
