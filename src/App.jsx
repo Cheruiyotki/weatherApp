@@ -30,6 +30,14 @@ function App() {
         <TemperatureToggle />
         </div>
       </div>
+
+      {/* Main Content Section */}
+      <div className="space-y-8">
+        {/* Conditional Renderng */}
+        <div className="flex justify-center">
+          <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border "></div>
+        </div> 
+      </div>
  </div>
      </div>
      
