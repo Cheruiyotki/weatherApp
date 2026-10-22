@@ -4,6 +4,7 @@ import React from "react";
 import bgImage from "./assets/background.webp"
 import SearchBar from "./components/SearchBar";
 import TemperatureToggle from "./components/TemperatureToggle";
+import LoadingSpinner from "./components/LoadingSpinner";
 
 function App() {
   return (
@@ -35,7 +36,10 @@ function App() {
       <div className="space-y-8">
         {/* Conditional Renderng */}
         <div className="flex justify-center">
-          <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border "></div>
+          <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 ">
+           <LoadingSpinner/>
+           <p className="text-white/80 text-center mt-4 font-medium">Fetching latest weather data ...</p>
+          </div>
         </div> 
       </div>
  </div>
