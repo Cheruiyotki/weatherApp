@@ -3,10 +3,10 @@ import React from "react";
 
 function SearchBar() {
     return (
-        <div className="relative "> 
+        <div className="relative max-w-2xl w-full mx-auto "> 
             <form className="relative" action="">
                 <div className="relative group">
-                  <Search  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/60 w-5 h-5 group-focus-within:text-white transition-all" />
+                  <Search  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/60 w-50 h-5 group-focus-within:text-white transition-all" />
                   <input
                    type="text"
                    placeholder="Search for any city ..."
