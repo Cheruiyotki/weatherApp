@@ -29,7 +29,7 @@ function App() {
               <p className="text-white/80 text-lg md:text-xl mb-8 max-w-2xl mx-auto leading-relaxed">Experience weather like never before with real-time data, beautiful visuals, and precise forecasts for any locations worldwide.</p>
             </div>
             <div className="flex flex-col lg:flex-row items-center justify-center space-y-6 lg:space-y-0 lg:space-x-6 mb-12">
-              <SearchBar />
+              {/* <SearchBar /> */}
               <TemperatureToggle />
             </div>
           </div>
