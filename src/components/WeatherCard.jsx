@@ -1,4 +1,4 @@
-import { MapPin, Sunrise } from "lucide-react";
+import { MapPin, Sunrise, Sunset } from "lucide-react";
 import React from "react";
 
 function WeatherCard() {
@@ -73,6 +73,18 @@ function WeatherCard() {
                     <div className="text-white font-semibold text-lg pl-11">
                         {/* Dynamic content */}
                     </div>
+                </div>
+  
+                <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-sm rounded-2xl p-4 border border-purple-400/20">
+                      <div className="flex items-center space-x-3 mb-2 ">
+                        <div className="p-2 bg-purple-400/20 rounded-full">
+                            <Sunset className="w-4 h-4 text-purple-300"/>
+                        </div>
+                        <span className="text-white/800 text-sm font-medium">Sunset</span>
+                      </div>
+                      <div className="text-white font-semibold text-lg pl-11">
+                        {/* Dynamic content */}
+                      </div>
                 </div>
             </div>
         </div>

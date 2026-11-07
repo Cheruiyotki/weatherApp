@@ -7,6 +7,7 @@ import TemperatureToggle from "./components/TemperatureToggle";
 import LoadingSpinner from "./components/LoadingSpinner";
 import ErrorMessage from "./components/ErrorMessage";
 import WeatherCard from "./components/WeatherCard";
+import WeatherForecast from "./components/WeatherForecst";
 
 function App() {
   return (
@@ -49,13 +50,18 @@ function App() {
             {/* <div className="max-w-2xl mx-auto">
             <ErrorMessage/>
         </div> */}
-        
-        {/* conditional rendering   */}
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-          <div className="xl:col-span-2">
-           <WeatherCard/>
-          </div>
-        </div>
+
+            {/* conditional rendering   */}
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+              <div className="xl:col-span-2">
+                <WeatherCard />
+              </div>
+
+              <div className="xl:cols-span-1">
+                {/* Conditional rendering */}
+                <WeatherForecast />
+              </div>
+            </div>
 
 
           </div>
