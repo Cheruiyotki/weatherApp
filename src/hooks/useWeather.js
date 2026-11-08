@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { getCurrentWeather, getCurrentWeatherByCords, getWeatherForecast,  } from "../services/weatherAPI";
 
+const WEATHER_CACHE_TTL = 10 * 60 * 1000;
+const weatherCache = new Map();
+const weatherRequests = new Map();
 
 export const useWeather = () => {
     const [currentWeather, setCurrentWeather] = useState(null);
@@ -11,20 +14,58 @@ export const useWeather = () => {
 
 
     const fetchWeatherByCity = async (city) => {
+        const normalizedCity = city.trim().toLowerCase();
+        const cachedWeather = weatherCache.get(normalizedCity);
+
+        if (cachedWeather && Date.now() - cachedWeather.timestamp < WEATHER_CACHE_TTL) {
+            setCurrentWeather(cachedWeather.weather);
+            setForecast(cachedWeather.forecast);
+            setError(null);
+            return;
+        }
+
+        const existingRequest = weatherRequests.get(normalizedCity);
+        if (existingRequest) {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const { weather, forecast } = await existingRequest;
+                setCurrentWeather(weather);
+                setForecast(forecast);
+            } catch (error) {
+                setError(error instanceof Error ? error.message : "An unknown error occurred.");
+            } finally {
+                setLoading(false);
+            }
+            return;
+        }
+
         setLoading(true);
         setError(null);
 
-        try{
-            const[weatherData, foreCast] = await Promise.all([
-                getCurrentWeather(city),
-                getWeatherForecast(city),
-            ]);
-            setCurrentWeather(weatherData);
-            setForecast(foreCast);
+        const request = Promise.all([
+            getCurrentWeather(city),
+            getWeatherForecast(city),
+        ]).then(([weather, forecast]) => {
+            weatherCache.set(normalizedCity, {
+                weather,
+                forecast,
+                timestamp: Date.now(),
+            });
+            return { weather, forecast };
+        });
+
+        weatherRequests.set(normalizedCity, request);
+
+        try {
+            const { weather, forecast } = await request;
+            setCurrentWeather(weather);
+            setForecast(forecast);
         } catch (error) {
             setError(error instanceof Error ? error.message : "An unknown error occurred.");
-        }
-        finally {
+        } finally {
+            weatherRequests.delete(normalizedCity);
             setLoading(false);
         }
     }

@@ -2,20 +2,30 @@ const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 const BASE_URL = import.meta.env.VITE_WEATHER_API_URL;
 const GEO_URL = import.meta.env.VITE_WEATHER_GEO_URL;
 
- 
+const getApiError = (response, resource) => {
+    if (response.status === 401) {
+        return new Error("Invalid API key. Please check your API key and try again.");
+    }
+
+    if (response.status === 404) {
+        return new Error(`${resource} not found. Please check the location and try again.`);
+    }
+
+    if (response.status === 429) {
+        return new Error(
+            "OpenWeather is rate-limiting this API key. Check that the key is active, has available quota, and that you are using the correct account."
+        );
+    }
+
+    return new Error(`Failed to fetch ${resource.toLowerCase()}. Please try again later.`);
+};
 
 export const getCurrentWeather = async (city) =>{
     try {
-        const response = await fetch(`${BASE_URL}/weather?q=${city}&appid=${API_KEY}&units=metric`)
+        const response = await fetch(`${BASE_URL}/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`)
 
         if (!response.ok) {
-             if (response.status === 404) {
-                throw new Error("City not found. Please check the city name and try again.");
-             } else if (response.status === 401) {
-                throw new Error("Invalid API key. Please check your API key and try again.");
-             } else {
-                throw new Error("Failed to fetch current weather data. Please try again later.");
-             }
+            throw getApiError(response, "Current weather data");
         }  
 
         const data = await response.json();
@@ -45,13 +55,7 @@ export const getCurrentWeatherByCords = async (lat, lon) => {
 
       
         if (!response.ok) {
-            if (response.status === 401) {
-                throw new Error("Invalid API key. Please check your API key.");
-            } else if (response.status === 404) {
-                throw new Error("Location not found for these coordinates.");
-            } else {
-                throw new Error("Failed to fetch current weather data. Please try again later.");
-            }
+            throw getApiError(response, "Location");
         }
 
         const data = await response.json();
@@ -81,13 +85,7 @@ export const  getWeatherForecast = async (city) => {
 
         
         if (!response.ok) {
-             if (response.status === 404) {
-                throw new Error("City not found. Please check the city name and try again.");
-             } else if (response.status === 401) {
-                throw new Error("Invalid API key. Please check your API key and try again.");
-             } else {
-                throw new Error("Failed to fetch current weather data. Please try again later.");
-             }
+            throw getApiError(response, "Forecast data");
         }  
 
         return  await response.json();
@@ -106,18 +104,12 @@ export const  searchCities = async (query) => {
     try {
         
         const response = await fetch(
-            `${GEO_URL}/direct?q=${query}&limit=5&appid=${API_KEY}`
+            `${GEO_URL}/direct?q=${encodeURIComponent(query)}&limit=5&appid=${API_KEY}`
         );
 
         
         if (!response.ok) {
-            if (response.status === 401) {
-                throw new Error("Invalid API key. Please check your API key.");
-            } else if (response.status === 404) {
-                throw new Error("Location not found for these coordinates.");
-            } else {
-                throw new Error("Failed to fetch current weather data. Please try again later.");
-            }
+            throw getApiError(response, "Location search");
         } 
 
         const data = await response.json();
