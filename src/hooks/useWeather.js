@@ -70,7 +70,7 @@ export const useWeather = () => {
     // load default weather data for a default city (e.g., "Nyeri") on initial load
     useEffect(() => {
         fetchWeatherByCity("Nyeri");
-    });
+    }, []);
 
     return {
         currentWeather,

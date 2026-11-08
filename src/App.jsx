@@ -54,19 +54,19 @@ function App() {
           <div className="space-y-8">
 
             {/* Conditional Renderng */}
-            {loading && (
+            {/* {loading && (
               <div className="flex justify-center">
                 <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 ">
                   <LoadingSpinner />
                   <p className="text-white/80 text-center mt-4 font-medium">Fetching latest weather data ...</p>
                 </div>
               </div>
-            )}
+            )} */}
 
             {/* conditional rendering of weather data will be here */}
             {error && !loading && (
               <div className="max-w-2xl mx-auto">
-                <ErrorMessage />
+                {/* <ErrorMessage /> */}
               </div>
             )}
 
